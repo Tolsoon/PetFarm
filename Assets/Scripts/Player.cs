@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     public List<string> saveData;
     //gameobject array of all possible pets you can own in order to load them back in
     public GameObject[] petPrefabs;
+    public GameObject[] particleEffects;
 
 
     //saving data in a list of strings
@@ -67,7 +68,7 @@ public class Player : MonoBehaviour
             ownedPets[i].GetComponent<Pet>().petNameStr = splitData[1];            
             ownedPets[i].GetComponent<Pet>().happiness = int.Parse(splitData[2]);
             ownedPets[i].GetComponent<Pet>().hunger = int.Parse(splitData[3]);
-            ownedPets[i].GetComponent<Pet>().petName.text = ownedPets[i].GetComponent<Pet>().petNameStr;
+            
             
 
         }
@@ -134,13 +135,16 @@ public class Player : MonoBehaviour
     public void UpdatePetStats()
     {        
         petName.text = selectedPet.petNameStr;
-        petHappiness.text = selectedPet.happiness.ToString();
-        petHunger.text = selectedPet.hunger.ToString();
+        petHappiness.text = "Happiness: " + selectedPet.happiness.ToString();
+        petHunger.text = "Hunger: " + selectedPet.hunger.ToString();
     }
 
     public void Petting()
     {
         selectedPet.Petting();
+        GameObject heartParticle = Instantiate(particleEffects[0], selectedPet.gameObject.transform);
+        Destroy(heartParticle, 3f);
+        
     }
 
     
